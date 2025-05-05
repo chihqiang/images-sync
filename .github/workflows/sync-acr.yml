@@ -1,0 +1,17 @@
+name: sync-acr
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      ACR_USERNAME: ${{ secrets.ACR_USERNAME }}
+      ACR_PASSWORD: ${{ secrets.ACR_PASSWORD }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run sync-acr-hub Script
+        run: bash sync-acr-hub.sh
+      - name: Run sync-acr-soft Script
+        run: bash sync-acr-soft.sh
