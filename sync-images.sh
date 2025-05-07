@@ -59,24 +59,25 @@ while IFS= read -r IMAGE || [[ -n "$IMAGE" ]]; do
 
     # 打印拉取镜像提示
     echo "📥 拉取镜像 $FORM_IMAGE ..."
-
     # 从源仓库拉取镜像
     docker pull "$FORM_IMAGE"
 
     # 打印打标签提示
     echo "🏷️  打标签为 $TO_IMAGE ..."
-
     # 给镜像打上目标仓库的标签
     docker tag "$FORM_IMAGE" "$TO_IMAGE"
 
     # 打印推送提示
     echo "📤 推送镜像到远程仓库 ..."
-
     # 推送镜像到目标仓库
     docker push "$TO_IMAGE"
-
+    
     # 打印成功推送信息
     echo "✅ 已成功推送到：$TO_IMAGE"
+
+    # 打印成功推送信息
+    echo "🧹 清理本地镜像：$FORM_IMAGE, $TO_IMAGE"
+    docker rmi -f "$FORM_IMAGE" "$TO_IMAGE" || true
 
     # 美观的分隔线
     echo "------------------------------------"
